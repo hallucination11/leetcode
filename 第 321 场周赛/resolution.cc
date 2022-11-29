@@ -54,3 +54,38 @@ public:
 		 return t.length() - m;
     }
 };
+
+
+# 3.从链表中移除节点
+
+给你一个链表的头节点 head 。
+
+对于列表中的每个节点 node ，如果其右侧存在一个具有 严格更大 值的节点，则移除 node 。
+
+返回修改后链表的头节点 head 。
+
+示例 1：
+输入：head = [5,2,13,3,8]
+输出：[13,8]
+解释：需要移除的节点是 5 ，2 和 3 。
+- 节点 13 在节点 5 右侧。
+- 节点 13 在节点 2 右侧。
+- 节点 8 在节点 3 右侧。
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNodes(ListNode* head) {
+        
+    }
+};
