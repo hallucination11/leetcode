@@ -18,9 +18,17 @@
 
 给你一个字符串 sentence ，请你判断它是不是一个回环句。如果是，返回 true ；否则，返回 false 。
 
-class Solution {
-public:
-    bool isCircularSentence(string sentence) {
-  		      
-    }
-};
+class Solution(object):
+    def isCircularSentence(self, sentence):
+        """
+        :type sentence: str
+        :rtype: bool
+        """
+        words = sentence.split(' ')
+        n = len(words)
+        for i in range(n):
+        	next = (i + 1) % n
+        	if words[i][-1] != words[next][0]:
+        		return false
+
+        return true
