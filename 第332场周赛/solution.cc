@@ -30,5 +30,39 @@ class Solution(object):
         	next = (i + 1) % n
         	if words[i][-1] != words[next][0]:
         		return false
-
         return true
+
+
+
+# 2.划分技能点相等的团队
+
+给你一个正整数数组 skill ，数组长度为 偶数 n ，其中 skill[i] 表示第 i 个玩家的技能点。将所有玩家分成 n / 2 个 2 人团队，使每一个团队的技能点之和 相等 。
+
+团队的化学反应等于团队中玩家的技能点乘积 。
+
+返回所有团队的化学反应之和，如果无法使每个团队的技能点之和相等，则返回 -1 。
+
+class Solution {
+public:
+    long long dividePlayers(vector<int>& skill) {
+        long long tot = 0;
+        int n = skill.size();
+        map<int, int> mp;
+        for (auto x : skill) {
+            tot += x;
+            mp[x] += 1；
+        }
+        if (tot % n != 0) return -1;
+        tot /= n
+        for (auto x : skill) {
+            if (mp[x] == 0) continue;
+            if (mp.count(tot - x) && mp[tot-x] > 0) {
+                mp[x] -= 1;
+                mp[tot - x] -= 1;
+                ret += (long long)x * (tot - x) 
+            }
+        }
+        return ret;
+    }
+};
+ 
