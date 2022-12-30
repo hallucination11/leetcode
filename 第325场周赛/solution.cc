@@ -37,13 +37,24 @@
 解释：因为 words 中不存在字符串 "ate" ，所以返回 -1 。
 
 
+我们只需要枚举一下移动的次数，再使用两个变量分别记录往左和往右移动i步之后的下标即可
+
+
 class Solution {
 public:
     int closetTarget(vector<string>& words, string target, int startIndex) {
-        
+        int l = startIndex - 1, r = startIndex + 1;
+        int n = words.size();
+
+        for (int i = 0 ; i < n ; i ++) {
+            l = (l+1) % n;
+            r = (r-1+n) % n;
+            if (words[l] == target || words[r] == target) return i;
+        }
+        return -1;
+            
     }
 };
-
 
 # 2.
 
