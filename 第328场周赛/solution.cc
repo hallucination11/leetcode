@@ -99,7 +99,46 @@ public:
     }
 };
 
+3.统计好子数组的数目
 
+给你一个整数数组 nums 和一个整数 k ，请你返回 nums 中 好 子数组的数目。
+
+一个子数组 arr 如果有 至少 k 对下标 (i, j) 满足 i < j 且 arr[i] == arr[j] ，那么称它是一个 好 子数组。
+
+子数组 是原数组中一段连续 非空 的元素序列。
+
+示例 1：
+
+输入：nums = [1,1,1,1,1], k = 10
+输出：1
+解释：唯一的好子数组是这个数组本身。
+
+
+class Solution {
+public:
+    long long countGood(vector<int>& nums, int k) {
+        long long ret = 0;
+        
+        int l = 0;
+        int n = nums.size();
+        
+        map<int, int> mp;
+        long long tmp = 0;
+        for (int r = 0; r < n; r++) {
+           // 配对数加上区间内元素的个数
+            tmp += mp[nums[r]];
+            mp[nums[r]]++;
+           // 移动l之后，会减少区间内nums[l]个数-1的配对数，因此判断条件为tmp - (mp[nums[l]] - 1)
+            while (l < r && tmp - mp[nums[l]] + 1 >= k) {
+                tmp -= mp[nums[l]] - 1;
+                mp[nums[l++]]--;            
+            }
+            if (tmp >= k)
+                ret += l+1;
+        }
+        return ret;
+    }
+};
 
 
 
