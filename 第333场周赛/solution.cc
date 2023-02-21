@@ -26,17 +26,29 @@ nums2[i] = [idi, vali] 表示编号为 idi 的数字对应的值等于 vali 。
 class Solution {
 public:
     vector<vector<int>> mergeArrays(vector<vector<int>>& nums1, vector<vector<int>>& nums2) {
-        map<int, int> mp;
-        for (auto a : nums1) {
-            mp[a[0]] = a[1];
+        vector<vector<int>> result;
+        unordered_map<int,int>mp;
+        for (auto v : nums1) {
+            mp[v[0]] = v[1];
         }
-        for (auto a : nums2) {
-            mp[a[0]] = mp[a[0]] + a[1];
+        for (auto vec : nums2) {
+            if (mp[vec[0]] == 0) {
+                result.push_back(vec);
+            }
+            else {
+                int tmp = vec[1] + mp[vec[0]];
+                result.push_back(vector<int>{vec[0], tmp});
+                mp[vec[0]] = -1;
+            }
         }
 
-       int i = 0 , j = 0;
-       while (i < nums1.size() || j < nums2.size()) {
-            int a = nums1[i][0],
-       }
+        for( auto [mpp,cnt] : mp ){
+            if( cnt > 0 ){
+                result.push_back(vector<int>{mpp,cnt});
+            }
+        }
+
+        sort(result.begin(), result.end());
+        return result;
     }
 };
