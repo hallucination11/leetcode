@@ -13,7 +13,6 @@ nums2[i] = [idi, vali] 表示编号为 idi 的数字对应的值等于 vali 。
 返回结果数组。返回的数组需要按 id 以递增顺序排列。
 
  
-
 示例 1：
 
 输入：nums1 = [[1,2],[2,3],[4,5]], nums2 = [[1,4],[3,2],[4,1]]
@@ -27,6 +26,17 @@ nums2[i] = [idi, vali] 表示编号为 idi 的数字对应的值等于 vali 。
 class Solution {
 public:
     vector<vector<int>> mergeArrays(vector<vector<int>>& nums1, vector<vector<int>>& nums2) {
-        
+        map<int, int> mp;
+        for (auto a : nums1) {
+            mp[a[0]] = a[1];
+        }
+        for (auto a : nums2) {
+            mp[a[0]] = mp[a[0]] + a[1];
+        }
+
+       int i = 0 , j = 0;
+       while (i < nums1.size() || j < nums2.size()) {
+            int a = nums1[i][0],
+       }
     }
 };
