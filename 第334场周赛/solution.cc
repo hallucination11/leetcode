@@ -19,8 +19,24 @@ rightSum[i] 是数组 nums 中下标 i 右侧元素之和。如果不存在对�
 class Solution {
 public:
     vector<int> leftRightDifference(vector<int>& nums) {
-        for (int i = 0 ; i < nums.size(); i ++) {
-            
+        int n = nums.size();
+        int lef[n+1], rig[n+1];
+        memset(lef, 0, sizeof lef);
+        memset(rig, 0, sizeof rig);
+
+        lef[0] = 0;
+        for (int i = 1 ; i < n ; i ++) {
+            lef[i] = lef[0] + nums[i - 1];
         }
+        right[n] = 0;
+        for (int i = n - 1 ; i >= 0 ; i--) {
+            right[i] = right[n] + nums[i + 1];
+        }
+
+        vector<int> res;
+        for (int i = 0 ; i < n ; i++) {
+            res.push_back(abs(lef[i] - right[i]));
+        }
+        return res;
     }
 };
