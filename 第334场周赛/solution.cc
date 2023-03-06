@@ -40,3 +40,37 @@ public:
         return res;
     }
 };
+
+2.找出字符串的可整除数组
+
+给你一个下标从 0 开始的字符串 word ，长度为 n ，由从 0 到 9 的数字组成。另给你一个正整数 m 。
+
+word 的 可整除数组 div  是一个长度为 n 的整数数组，并满足：
+
+如果 word[0,...,i] 所表示的 数值 能被 m 整除，div[i] = 1
+否则，div[i] = 0
+返回 word 的可整除数组。
+
+示例 1：
+
+输入：word = "998244353", m = 3
+输出：[1,1,0,0,0,1,1,0,0]
+解释：仅有 4 个前缀可以被 3 整除："9"、"99"、"998244" 和 "9982443" 。
+
+class Solution {
+public:
+    vector<int> divisibilityArray(string word, int m) {
+        vector<int> ret;
+        
+        int n = word.length();
+        long long md = 0;
+            
+        for (int i = 0; i < n; i++) {
+            // word[i] - '0'，即将字符数字转成int
+            // 加入一个新的数字，即md * 10再加上末尾数字
+            md = (md * 10 + word[i] - '0') % m;
+            ret.push_back(md % m == 0);
+        }
+        return ret;
+    }
+};
