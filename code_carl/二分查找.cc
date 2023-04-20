@@ -85,6 +85,64 @@ public:
     }
 };
 
+2.在排序数组中查找元素的第一个和最后一个位置
+
+给定一个按照升序排列的整数数组 nums，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。
+
+如果数组中不存在目标值 target，返回 [-1, -1]。
+
+示例 1：
+
+输入：nums = [5,7,7,8,8,10], target = 8
+输出：[3,4]
+
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+    	int leftBorder = getLeftBorder(nums, target);
+        int rightBorder = getRightBorder(nums, target);
+
+        if (leftBorder == -2 || rightBorder == -2) return {-1, -1};
+
+        if (rightBorder - leftBorder > 1) return {leftBorder + 1, rightBorder - 1};
+
+        return {-1, -1};
+    }
+
+    int getRightBorder(vector<int>& nums, int target) {
+    	int right = nums.size() - 1, left = 0, rightBorder = -2;
+    	while (left <= right) {
+    		int middle = left + ((right - left) / 2);
+    		if (nums[middle] > target) {
+    			right = middle - 1;
+    		} else {
+    			left = middle + 1;
+    			rightBorder = left;
+    		} 
+    	}
+    	return rightBorder;
+    }
+
+    int getLeftBorder(vector<int>& nums, int target) {
+    	int right = nums.size() - 1, left = 0, leftBorder = -2;
+    	while (left <= right) {
+    		int middle = left + ((right - left) / 2);
+    		if (nums[middle] >= target) {
+    			right = middle - 1;
+    			leftBorder = right;
+    		} else {
+    			left = middle + 1;
+    		} 
+    	}
+    	return leftBorder;
+    }
+};
+
+
+
+
+
+
 
 
 
