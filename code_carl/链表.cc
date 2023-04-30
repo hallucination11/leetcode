@@ -104,3 +104,61 @@ public:
         return reverse(NULL, head);
     }
 };
+
+
+5.两两交换链表中的节点
+
+给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。
+
+你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
+
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        ListNode* dummyNode = new ListNode(0);
+        dummyHead->next = head;
+        ListNode* cur = dummyHead;
+        while(cur->next != nullptr && cur->next->next != nullptr) {
+            ListNode* tmp = cur->Next;
+            ListNode* tmp1 = cur->next->next->next;
+            cur->next = cur->next->next;
+            cur->next->next = tmp;
+            cur->next->next->next = tmp1;
+            cur = cur->next->next;
+        }
+        return dummyHead->next;
+
+    }
+};
+
+
+6.删除链表的倒数第N个节点
+
+给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。
+
+进阶：你能尝试使用一趟扫描实现吗？
+
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode* dummyHead = new ListNode(0);
+        dummyHead->next = head;
+        ListNode* fast = dummyHead;
+        ListNode* slow = dummyHead;
+
+        while (fast != null && n--) {
+            fast = fast->next;
+        }
+
+        fast = fast->next;
+
+        while (fast != null) {
+            fast = fast->next;
+            slow = slow->next;
+        } 
+
+        slow->next = slow->next->next;
+        
+        return dummyHead->next;
+    }
+};
