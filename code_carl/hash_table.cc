@@ -94,3 +94,93 @@ public:
 
     }
 };
+
+
+6.四数相加II
+
+给定四个包含整数的数组列表 A , B , C , D ,计算有多少个元组 (i, j, k, l) ，使得 A[i] + B[j] + C[k] + D[l] = 0。
+
+为了使问题简单化，所有的 A, B, C, D 具有相同的长度 N，且 0 ≤ N ≤ 500 。所有整数的范围在 -2^28 到 2^28 - 1 之间，最终结果不会超过 2^31 - 1 。
+
+例如:
+
+输入:
+
+A = [ 1, 2]
+B = [-2,-1]
+C = [-1, 2]
+D = [ 0, 2]
+输出:
+
+2
+
+解释:
+
+两个元组如下:
+
+(0, 0, 0, 1) -> A[0] + B[0] + C[0] + D[1] = 1 + (-2) + (-1) + 2 = 0
+(1, 1, 0, 0) -> A[1] + B[1] + C[0] + D[0] = 2 + (-1) + (-1) + 0 = 0
+
+class Solution {
+public:
+    int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
+        unordered_map<int, int> umap;
+        for (int a : A) {
+            for (int b : B) {
+                umap[a + b]++;
+            }
+        }
+
+        int count = 0;
+
+        for (int c : C) {
+            for (int d : D) {
+                if (umap.find(0 - (c + f)) != umap.end()) {
+                    count += umap[0 - (c + d)];
+                }
+            }
+        }
+
+        return count;
+    }
+};
+
+7.赎金信
+
+给定一个赎金信 (ransom) 字符串和一个杂志(magazine)字符串，判断第一个字符串 ransom 能不能由第二个字符串 magazines 里面的字符构成。如果可以构成，返回 true ；
+
+否则返回 false。
+
+(题目说明：为了不暴露赎金信字迹，要从杂志上搜索各个需要的字母，组成单词来表达意思。杂志字符串中的每个字符只能在赎金信字符串中使用一次。)
+
+注意：
+
+你可以假设两个字符串均只含有小写字母。
+
+canConstruct("a", "b") -> false
+canConstruct("aa", "ab") -> false
+canConstruct("aa", "aab") -> true
+
+class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        int record[26] = {0};
+
+        if (ransomNote.size() > magazine.size()) {
+            return false;
+        }
+
+        for (int i = 0 ; i < magazine.length() ; i ++) {
+            records[magazine[i] - 'a'] ++;
+        }
+
+        for (int i = 0 ; i < ransom.length() ; i ++) {
+            records[ransom[i] - 'a'] --;
+            if (records[ransom[i] - 'a'] < 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+};
