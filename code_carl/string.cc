@@ -48,3 +48,42 @@ public:
     	return s;
     }
 };
+
+
+3.替换空格
+
+请实现一个函数，把字符串 s 中的每个空格替换成"%20"。
+
+示例 1： 输入：s = "We are happy."
+输出："We%20are%20happy."
+
+class Solution {
+public:
+    string replaceSpace(string s) {
+        int count = 0;
+        int SoldSize = s.size();
+        for (int i = 0 ; i < SoldSize ; i ++) {
+            if (s[i] == ' ') {
+                count ++;
+            }
+        }
+        s.resize(SoldSize + count * 2);
+
+        int newSize = s.size();
+        for (int i = newSize - 1, j = SoldSize - 1 ; j < i ; j --, i --) {
+            if (s[j] != ' ') {
+                s[i] = s[j];
+            } else {
+                s[i] = '0';
+                s[i - 1] = '2';
+                s[i - 2] = '%';
+                i -= 2;
+            }
+        }
+        return s;
+    }
+};
+
+
+
+
