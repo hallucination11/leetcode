@@ -109,6 +109,59 @@ public:
     return result;
 };
 
+6.翻转二叉树
+
+翻转一棵二叉树
+递归法
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        if (root == NULL) return root;
+        swap(root->left, root->right);
+        invertTree(root->left);
+        invertTree(root->right);
+        return root; 
+    }
+};
+
+迭代法
+
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        if (root == NULL) return root;
+        stack<TreeNode*> st;
+        st.push(root);
+        while (!st.empty()) {
+            TreeNode* node = st.top();
+            st.pop();
+            swap(root->left, root->right);
+            if (root->right) st.push(node->right);   
+            if(node->left) st.push(node->left);  
+        }
+        
+        return root; 
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
