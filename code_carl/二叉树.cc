@@ -125,7 +125,7 @@ public:
 };
 
 迭代法
-
+深度优先遍历
 class Solution {
 public:
     TreeNode* invertTree(TreeNode* root) {
@@ -145,7 +145,49 @@ public:
 };
 
 
+广度优先遍历
 
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        queue<TreeNode*> que;
+        if (root != NULL) que.push(root);
+        while (!que.empty()) {
+            int size = que.size();
+            for (int i = 0 ; i < size ; i ++) {
+                TreeNode* node = que.front();
+                que.pop();
+                swap(node->left, node->right); // 节点处理
+                if (node->left) que.push(node->left);
+                if (node->right) que.push(node->right);
+            }
+        }
+        return root;
+    }
+};
+
+
+8.对称二叉树
+
+class Solution {
+public:
+    bool compare(TreeNode* left, TreeNode* right) {
+        if (left == NULL && right != NULL) return false;
+        else if (left != NULL && right == NULL) return false;
+        else if (left == NULL && right == NULL) return true;
+        else if (left->val != right->val) return false;
+
+        bool outside = compare(left->left, right->right);
+        bool inside = compare(left->right, right->left)
+
+        return outside && inside;
+    }
+
+    bool isSymmetric(TreeNode* root) {
+        if (root == NULL) return true;
+        return compare(root->left, root->right); 
+    }
+};
 
 
 
