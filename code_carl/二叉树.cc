@@ -211,13 +211,82 @@ public:
 
 
 
+15.左叶子之和
+
+计算给定二叉树的所有左叶子之和。
+
+给出左叶子的明确定义：节点A的左孩子不为空，且左孩子的左右孩子都为空（说明是叶子节点），那么A节点的左孩子为左叶子节点
+
+if (node->left != NULL && node->left->left == NULL && node->left->right == NULL) {
+
+}
 
 
+class Solution {
+public:
+    int sumOfLeftLeaves(TreeNode* root) {
+        if (root == NULL) return 0;
+        if (root->left == NULL && root->right== NULL) return 0;
+
+        int leftValue = sumOfLeftLeaves(root->left);    // 左
+        if (root->left && !root->left->left && !root->left->right) { // 左子树就是一个左叶子的情况
+            leftValue = root->left->val;
+        }
+        int rightValue = sumOfLeftLeaves(root->right);  // 右
+
+        int sum = leftValue + rightValue;               // 中
+        return sum;
+    }
+};
 
 
+精简之后
 
+class Solution {
+public:
+    int sumOfLeftLeaves(TreeNode* root) {
+        if (root == NULL) return 0;
+        int leftValue = 0;
+        if (root->left != NULL && root->left->left == NULL && root->left->right == NULL) {
+            leftValue = root->left->val;
+        }
+        return leftValue + sumOfLeftLeaves(root->left) + sumOfLeftLeaves(root->right);
+    }
+};
 
+16.找树左下角的值
 
+给定一个二叉树，在树的最后一行找到最左边的值。
+
+class Solution {
+public:
+    int maxDepth = INT_MIN;
+    int result;
+    void traversal(TreeNode* root, int depth) {
+        if (root->left == NULL && root->right == NULL) {
+            if (depth > maxDepth) {
+                maxDepth = depth;
+                result = root->val;
+            }
+            return;
+        }
+        if (root->left) {
+            depth++;
+            traversal(root->left, depth);
+            depth--; // 回溯
+        }
+        if (root->right) {
+            depth++;
+            traversal(root->right, depth);
+            depth--; // 回溯
+        }
+        return;
+    }
+    int findBottomLeftValue(TreeNode* root) {
+        traversal(root, 0);
+        return result;
+    }
+};
 
 
 
