@@ -70,3 +70,39 @@ class Solution {
         return result;
     }
 };
+
+
+7.组合总数
+
+给定一个无重复元素的数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
+
+candidates 中的数字可以无限制重复被选取。
+
+示例 1：
+
+输入：candidates = [2,3,6,7], target = 7,
+所求解集为： [ [7], [2,2,3] ]
+
+class Solution {
+private:
+	vector<int> path;
+	vector<vector<int>> result
+	void backtracking(vector<int>& candidates, int target, int sum, int startIndex) {
+		if (sum > target) return;
+		if (sum == target) result.push_back(path);
+		for (int i = startIndex, i < candidates.size() ; i ++) {
+			sum += candidates[i];
+			path.push_back(candidates[i]);
+			backtracking(candidates, target, sum, i);
+			sum -= candidates[i];
+			path.pop_back();
+		} 
+	}
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+    	path.clear();
+    	result.clear();
+    	backtracking(candidates, target, 0, 0);
+    	return result;
+    }
+}；
