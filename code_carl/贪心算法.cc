@@ -150,3 +150,266 @@ public:
     	return result;
     }
 };
+
+7.跳跃游戏 
+
+给定一个非负整数数组，你最初位于数组的第一个位置。
+
+数组中的每个元素代表你在该位置可以跳跃的最大长度。
+
+判断你是否能够到达最后一个位置。
+
+示例  1:
+
+输入: [2,3,1,1,4]
+输出: true
+解释: 我们可以先跳 1 步，从位置 0 到达 位置 1, 然后再从位置 1 跳 3 步到达最后一个位置。
+
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+    	int cover = 0;
+    	if (nums.size() == 1) return true
+    	for (int i = 0 ; i <= cover ; i ++) {
+    		cover += max(i + nums[i], cover);
+    		if (cover >= nums.size() - 1) return true;
+    	}
+    }
+};
+
+
+8.跳跃游戏 II
+
+给定一个非负整数数组，你最初位于数组的第一个位置。
+
+数组中的每个元素代表你在该位置可以跳跃的最大长度。
+
+你的目标是使用最少的跳跃次数到达数组的最后一个位置。
+
+示例:
+
+输入: [2,3,1,1,4]
+输出: 2
+解释: 跳到最后一个位置的最小跳跃数是 2。从下标为 0 跳到下标为 1 的位置，跳  1  步，然后跳  3  步到达数组的最后一个位置。
+说明: 假设你总是可以到达数组的最后一个位置。
+
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+    	if (nums.size() == 1) return 0;
+        int curDistance = 0;    // 当前覆盖最远距离下标
+        int ans = 0;            // 记录走的最大步数
+        int nextDistance = 0;   // 下一步覆盖最远距离下标
+
+        for (int i = 0 ; i < nums.size() ; i ++) {
+        	nextDistance = max(i + nums[i], nextDistance);
+        	if (i == curDistance) {
+        		ans ++;
+        		curDistance = nextDistance;
+        		if (nextDistance >= nums.size() - 1) break;
+        	}
+        }
+        return ans;
+    }
+};
+
+
+9.K次取反后最大化的数组和
+
+给定一个整数数组 A，我们只能用以下方法修改该数组：我们选择某个索引 i 并将 A[i] 替换为 -A[i]，然后总共重复这个过程 K 次。（我们可以多次选择同一个索引 i。）
+
+以这种方式修改数组后，返回数组可能的最大和。
+
+示例 1：
+
+输入：A = [4,2,3], K = 1
+输出：5
+解释：选择索引 (1,) ，然后 A 变为 [4,-2,3]。
+
+示例 3：
+
+输入：A = [2,-3,-1,5,-4], K = 2
+输出：13
+解释：选择索引 (1, 4) ，然后 A 变为 [2,3,-1,5,4]。
+
+class Solution {
+static cmp(int a, int b) {
+	return abs(a) > abs(b);
+}
+
+public:
+	int largestSumAfterKNegations(vector<int>& A, int K) {
+		sort(A.begin(), A.end(), cmp);
+		for (int i = 0 ; i < A.size() ; i ++) {
+			if (A[i] < 0 && k > 0) {
+				A[i] = -A[i];
+				k --;
+			}
+		}
+		if (k % 2 == 1) {
+			A[A.size() - 1] *= -1;
+		}
+		int result = 0;
+		for (int a : A) {
+			result += a;
+		}
+
+		return result;
+	}
+};
+
+
+
+11.加油站
+
+在一条环路上有 N 个加油站，其中第 i 个加油站有汽油 gas[i] 升。
+
+你有一辆油箱容量无限的的汽车，从第 i 个加油站开往第 i+1 个加油站需要消耗汽油 cost[i] 升。你从其中的一个加油站出发，开始时油箱为空。
+
+如果你可以绕环路行驶一周，则返回出发时加油站的编号，否则返回 -1。
+
+说明:
+
+如果题目有解，该答案即为唯一答案。
+输入数组均为非空数组，且长度相同。
+输入数组中的元素均为非负数。
+示例 1: 输入:
+
+gas = [1,2,3,4,5]
+cost = [3,4,5,1,2]
+输出: 3 解释:
+
+从 3 号加油站(索引为 3 处)出发，可获得 4 升汽油。此时油箱有 = 0 + 4 = 4 升汽油
+开往 4 号加油站，此时油箱有 4 - 1 + 5 = 8 升汽油
+开往 0 号加油站，此时油箱有 8 - 2 + 1 = 7 升汽油
+开往 1 号加油站，此时油箱有 7 - 3 + 2 = 6 升汽油
+开往 2 号加油站，此时油箱有 6 - 4 + 3 = 5 升汽油
+开往 3 号加油站，你需要消耗 5 升汽油，正好足够你返回到 3 号加油站。
+因此，3 可为起始索引。
+
+
+暴力方法
+
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+    	for (int i = 0 ; i < cost.size() ; i ++) {
+    		int rest = gas[i] - cost[i];
+    		int index = (i + 1) % cost.size();
+    		while (rest > 0 && index != i) {
+    			rest += gas[i] - cost[i];
+    			index = (i + 1) % cost.size();
+    		}
+    		if (rest >= 0 && index == i) return i
+    	}
+    	return -1;
+    }
+};
+
+
+方法一
+
+直接从全局进行贪心选择，情况如下：
+
+情况一：如果gas的总和小于cost总和，那么无论从哪里出发，一定是跑不了一圈的
+
+情况二：rest[i] = gas[i]-cost[i]为一天剩下的油，i从0开始计算累加到最后一站，如果累加没有出现负数，说明从0出发，油就没有断过，那么0就是起点。
+
+情况三：如果累加的最小值是负数，汽车就要从非0节点出发，从后向前，看哪个节点能把这个负数填平，能把这个负数填平的节点就是出发节点
+
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+    	int curSum = 0;
+    	int min = INT_MAX;
+
+    	for (int i = 0 ; i < cost.size()i ++) {
+    		int rest = gas[i] - cost[i];
+
+    		curSum += rest;
+
+    		if (curSum < min) {
+    			min = curSum;
+    		}
+    	}
+
+    	if (curSum < 0) return -1;
+    	if (min >= 0) return 0;
+
+    	for (int i = cost.size() - 1 ; i >= 0 ; i --) {
+    		int rest = gas[i] - cost[i];
+    		min += rest;
+    		if (min >= 0) return i; 
+    	} 
+
+    	return -1;
+
+    }
+};
+
+
+贪心算法（方法二）
+
+可以换一个思路，首先如果总油量减去总消耗大于等于零那么一定可以跑完一圈，说明 各个站点的加油站 剩油量rest[i]相加一定是大于等于零的。
+
+每个加油站的剩余量rest[i]为gas[i] - cost[i]。
+
+i从0开始累加rest[i]，和记为curSum，一旦curSum小于零，说明[0, i]区间都不能作为起始位置，因为这个区间选择任何一个位置作为起点，到i这里都会断油，
+
+那么起始位置从i+1算起，再从0计算curSum。
+
+
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+    	int curSum = 0;
+        int totalSum = 0;
+        int start = 0;
+        for (int i = 0; i < gas.size(); i++) {
+        	curSum += gas[i] - cost[-];
+        	totalSum += gas[i] - cost[-];
+
+        	if (curSum < 0) {
+        		i = i + 1;
+        		curSum = 0;
+        	}
+        }
+        if (totalSum < 0) return -1;
+    }
+};
+
+
+
+12.老师想给孩子们分发糖果，有 N 个孩子站成了一条直线，老师会根据每个孩子的表现，预先给他们评分。
+
+你需要按照以下要求，帮助老师给这些孩子分发糖果：
+
+每个孩子至少分配到 1 个糖果。
+相邻的孩子中，评分高的孩子必须获得更多的糖果。
+那么这样下来，老师至少需要准备多少颗糖果呢？
+
+示例 1:
+
+输入: [1,0,2]
+输出: 5
+解释: 你可以分别给这三个孩子分发 2、1、2 颗糖果。
+
+class Solution {
+public:
+    int candy(vector<int>& ratings) {
+        vector<int> candyVec(ratings.size(), 1);
+        for (int i = 1 ; i < ratings.size() ; i ++) {
+            if (ratings[i] > ratings[i - 1]) candyVec[i] = candyVec[i] + 1;
+        }
+
+        for (int i = ratings.size() - 2 ; i >= 0 ; i --) {
+            if (ratings[i] > ratings[i + 1] ) {
+                candyVec[i] = max(candyVec[i], candyVec[i + 1] + 1);
+            }
+        }
+        
+        int result = 0;
+        for (int i = 0; i < candyVec.size(); i++) result += candyVec[i];
+        return result;
+    }
+};
